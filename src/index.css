@@ -79,6 +79,13 @@ body {
   cursor: pointer;
 }
 
+.loading {
+  text-align: center;
+
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 .quiz-screen {
   display: flex;
   flex-direction: column;

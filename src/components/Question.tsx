@@ -1,6 +1,6 @@
 import { decode } from "html-entities";
 
-import { QuizSessionResponse } from "./types/api-response";
+import { QuizSessionResponse } from "../types/api-response";
 import Answer from "./Answer";
 
 interface IProps {
