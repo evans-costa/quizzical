@@ -2,24 +2,46 @@ import { useCallback, useEffect, useState } from "react";
 import { QuizSessionResponse } from "../types/api-response";
 import Question from "./Question";
 import { fetchData } from "../lib/fetchQuestions";
+import { shuffle } from "../utils/shuffle";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState<QuizSessionResponse[]>([]);
   const [quizEnd, setQuizEnd] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const [score, setScore] = useState<number>(0);
 
   const fetchQuestions = useCallback(async () => {
+    setError("");
     setLoading(true);
 
-    const questions = await fetchData();
+    const data = await fetchData();
 
-    setQuestions(questions);
+    if (Number(data.response_code) !== 0) {
+      setLoading(false);
+      setError("Error when retrieving questions. Please try again.");
+      return;
+    }
+
+    const questionsResults: QuizSessionResponse[] = data.results.map(
+      (result, index) => ({
+        id: index,
+        type: result.type,
+        difficulty: result.difficulty,
+        category: result.category,
+        choices: shuffle([...result.incorrect_answers, result.correct_answer]),
+        select_answer: null,
+        correct_answer: result.correct_answer,
+        question: result.question,
+      }),
+    );
+
+    setQuestions(questionsResults);
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    fetchQuestions();
+    fetchQuestions().catch(console.error);
   }, [fetchQuestions]);
 
   function handleSelectAnswer(answer: string, id: number) {
@@ -53,7 +75,7 @@ export default function Quiz() {
     setScore(0);
     setQuestions([]);
     setQuizEnd(false);
-    fetchQuestions();
+    fetchQuestions().catch(console.error);
   }
 
   const questionElements = questions.map((question) => (
@@ -67,6 +89,7 @@ export default function Quiz() {
 
   return (
     <div className="quiz-screen">
+      {error && <p className="loading">{error}</p>}
       {loading ? (
         <p className="loading">Loading questions...</p>
       ) : (
