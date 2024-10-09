@@ -23,11 +23,23 @@ body {
 .container {
   position: relative;
 
-  width: 550px;
-  height: 550px;
+  min-width: 600px;
+
+  width: 600px;
+  min-height: 550px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: #f5f7fb;
   color: #293264;
+
+  background-image: url(blob-blue.png), url(blob-yellow.png);
+  background-repeat: no-repeat;
+  background-position:
+    -200px 432px,
+    378px -185px;
 }
 
 .start-screen {
@@ -37,12 +49,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  background-image: url(blob-blue.png), url(blob-yellow.png);
-  background-repeat: no-repeat;
-  background-position:
-    -150px 432px,
-    378px -185px;
 }
 
 .start-title {
@@ -71,4 +77,107 @@ body {
   border-radius: 15px;
   border: none;
   cursor: pointer;
+}
+
+.quiz-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 40px 75px 20px;
+}
+
+.quiz-question:not(:first-child) {
+  margin-top: 15px;
+}
+
+.quiz-question {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dbdef0;
+}
+
+.quiz-question-title {
+  margin: 0;
+
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.quiz-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+
+  margin-top: 15px;
+}
+
+.quiz-alternative {
+  cursor: pointer;
+  color: #293264;
+
+  min-width: 66px;
+  padding: 4px 10px;
+
+  font-family: "Karla", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  background-color: transparent;
+  border: 1px solid #4d5b9e;
+  border-radius: 8px;
+}
+
+.quiz-alternative.active {
+  border: none;
+  background-color: #d6dbf5;
+}
+
+.quiz-alternative.correct {
+  background-color: #94d7a2;
+}
+
+.quiz-alternative.incorrect {
+  background-color: #f8bcbc;
+}
+
+.quiz-alternative:disabled:not(.quiz-alternative.correct) {
+  opacity: 0.5;
+}
+
+.quiz-submit {
+  align-self: center;
+  margin-top: 20px;
+}
+
+.quiz-button {
+  max-width: 140px;
+  align-self: center;
+
+  padding: 10px 20px;
+
+  font-family: "Karla", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f5f7fb;
+
+  border: none;
+  border-radius: 8px;
+  background-color: #4d5b9e;
+
+  cursor: pointer;
+}
+
+.quiz-end {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 25px;
+
+  margin-right: 20px;
+}
+
+.quiz-end > p {
+  margin: 0;
+  font-size: 1 rem;
+  font-weight: bold;
 }

@@ -18,7 +18,6 @@ export default tseslint.config(
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
-      ...jsxA11y.flatConfigs.recommended.languageOptions,
       globals: globals.browser,
     },
     plugins: {
